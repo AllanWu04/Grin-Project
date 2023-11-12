@@ -1,5 +1,7 @@
 from grin.location import GrinLocation
 from grin.token import GrinTokenCategory, GrinTokenKind, GrinToken
+from grin.parsing import parse, GrinParseError
+from grin.lexing import to_tokens
 
 
 def take_user_grin_input():
@@ -11,4 +13,14 @@ def take_user_grin_input():
             break
         lines.append(user)
     return lines
+
+
+def convert_to_grin_tokens(lines):
+    """Takes grin input and converts to tokens"""
+    try:
+        iterable_list_token = list(parse(lines))
+        return iterable_list_token
+    except GrinParseError:
+        print("Sorry, an error has occurred while parsing your statements.")
+
 

@@ -3,6 +3,7 @@ from grin.location import GrinLocation
 from grin.token import GrinTokenKind, GrinToken
 from grin.parsing import parse, GrinParseError
 from grin.readinput import *
+from typing import Iterable
 import unittest
 
 class TestInputValues(unittest.TestCase):
@@ -16,3 +17,13 @@ class TestInputValues(unittest.TestCase):
         compare = []
         self.assertEqual(print_message, compare)
 
+    def test_convert_grin_token(self):
+        grin_values = take_user_grin_input()
+        convert = convert_to_grin_tokens(grin_values)
+        check_if_token_obj = convert[0][0]
+        self.assertEqual(type(check_if_token_obj), GrinToken)
+
+    def test2_convert_grin_token(self):
+        grin_values = take_user_grin_input()
+        convert = convert_to_grin_tokens(grin_values)
+        self.assertRaises(GrinParseError)
