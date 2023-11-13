@@ -43,6 +43,15 @@ class TestGrinConversion(unittest.TestCase):
         compare = {"A": "Hello", "B": 10, "C": 10, "D": "Dog", "E": "Dog"}
         self.assertEqual(all_values, compare)
 
+    def test5_let_conversion(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+        compare = {"A": 0}
+        self.assertEqual(all_values, compare)
     def test_print_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)
@@ -82,6 +91,18 @@ class TestGrinConversion(unittest.TestCase):
         compare = [4, 11.25, "Dog", "Cat", "Hi"]
         self.assertEqual(values_to_print, compare)
 
+    def test4_print_conversion(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
+        compare = [4, 11.25, 0, "Hi"]
+        self.assertEqual(values_to_print, compare)
     def test_instr_innum_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)

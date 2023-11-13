@@ -14,8 +14,11 @@ def let_conversion(line, values):
         values.update({line[1].text(): float(line[2].text())})
     else:
         looping_copy = dict(values)
-        for key, value in looping_copy.items():
-            values.update({line[1].text(): value})
+        if line[2].text() in looping_copy.keys():
+            for key, value in looping_copy.items():
+                values.update({line[1].text(): value})
+        else:
+            values.update({line[1].text(): 0})
     return values
 
 
@@ -24,9 +27,12 @@ def print_conversion(line, dict_of_values, values_to_print):
     if line[1].kind() == GrinTokenKind.LITERAL_FLOAT or line[1].kind() == GrinTokenKind.LITERAL_INTEGER or line[1].kind() == GrinTokenKind.LITERAL_STRING:
         values_to_print.append(line[1].value())
     else:
-        for key, value in dict_of_values.items():
-            if line[1].text() == key:
-                values_to_print.append(value)
+        if line[1].text() in dict_of_values.keys():
+            for key, value in dict_of_values.items():
+                if line[1].text() == key:
+                    values_to_print.append(value)
+        else:
+            values_to_print.append(0)
     return values_to_print
 
 
