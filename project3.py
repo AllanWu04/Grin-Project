@@ -16,8 +16,17 @@ import grin
 def main() -> None:
     commands = grin.take_user_grin_input()
     convert_commands = grin.convert_to_grin_tokens(commands)
-    var_assignment = grin.let_conversion(convert_commands)
-    display_values = grin.print_conversion(convert_commands)
+    all_var_values = dict()
+    values_to_print = []
+    for line in convert_commands:
+        if line[0].kind() == grin.GrinTokenKind.LET:
+            grin.let_conversion(line, all_var_values)
+        elif line[0].kind() == grin.GrinTokenKind.PRINT:
+            grin.print_conversion(line, all_var_values, values_to_print)
+        elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
+            break
+    for i in values_to_print:
+        print(i)
 
 if __name__ == '__main__':
     main()
