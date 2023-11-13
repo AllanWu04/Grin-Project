@@ -30,20 +30,17 @@ def print_conversion(line, dict_of_values, values_to_print):
     return values_to_print
 
 
-def instr_and_innum_conversion(lines):
+def instr_and_innum_conversion(line, dict_of_values):
     """Returns a list of inputs through INSTR and INNUM"""
-    current_values = let_conversion(lines)
-    for line in lines:
-        if line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
-            if line[0].kind() == GrinTokenKind.INNUM:
-                take_int_float = input()
-                if '.' in take_int_float:
-                    convert_to_float = float(take_int_float)
-                    current_values.update({line[1].text(): convert_to_float})
-                else:
-                    convert_to_int = int(take_int_float)
-                    current_values.update({line[1].text(): convert_to_int})
-            else:
-                take_str = input()
-                current_values.update({line[1].text(): take_str})
-    return current_values
+    if line[0].kind() == GrinTokenKind.INNUM:
+        take_int_float = input()
+        if '.' in take_int_float:
+            convert_to_float = float(take_int_float)
+            dict_of_values.update({line[1].text(): convert_to_float})
+        else:
+            convert_to_int = int(take_int_float)
+            dict_of_values.update({line[1].text(): convert_to_int})
+    else:
+        take_str = input()
+        dict_of_values.update({line[1].text(): take_str})
+    return dict_of_values

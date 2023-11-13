@@ -85,13 +85,44 @@ class TestGrinConversion(unittest.TestCase):
     def test_instr_innum_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)
-        dict_of_values = instr_and_innum_conversion(convert_tokens)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
+            elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
+                instr_and_innum_conversion(line, all_values)
         compare = {"X": 11}
-        self.assertEqual(dict_of_values, compare)
+        self.assertEqual(all_values, compare)
 
     def test2_instr_innum_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)
-        dict_of_values = instr_and_innum_conversion(convert_tokens)
-        compare = {"X": 13.5}
-        self.assertEqual(dict_of_values, compare)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
+            elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
+                instr_and_innum_conversion(line, all_values)
+        compare = {"X": "Hello"}
+        self.assertEqual(all_values, compare)
+
+    def test3_instr_innum_conversion(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
+            elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
+                instr_and_innum_conversion(line, all_values)
+        compare = {"X": 92.3}
+        self.assertEqual(all_values, compare)
