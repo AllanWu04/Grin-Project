@@ -18,17 +18,18 @@ def main() -> None:
     convert_commands = grin.convert_to_grin_tokens(commands)
     all_var_values = dict()
     values_to_print = []
-    for line in convert_commands:
-        if line[0].kind() == grin.GrinTokenKind.LET:
-            grin.let_conversion(line, all_var_values)
-        elif line[0].kind() == grin.GrinTokenKind.PRINT:
-            grin.print_conversion(line, all_var_values, values_to_print)
-        elif line[0].kind() == grin.GrinTokenKind.INNUM or line[0].kind() == grin.GrinTokenKind.INSTR:
-            grin.instr_and_innum_conversion(line, all_var_values)
-        elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
-            break
-    for i in values_to_print:
-        print(i)
+    if convert_commands is not None:
+        for line in convert_commands:
+            if line[0].kind() == grin.GrinTokenKind.LET:
+                grin.let_conversion(line, all_var_values)
+            elif line[0].kind() == grin.GrinTokenKind.PRINT:
+                grin.print_conversion(line, all_var_values, values_to_print)
+            elif line[0].kind() == grin.GrinTokenKind.INNUM or line[0].kind() == grin.GrinTokenKind.INSTR:
+                grin.instr_and_innum_conversion(line, all_var_values)
+            elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
+                break
+        for i in values_to_print:
+            print(i)
 
 if __name__ == '__main__':
     main()
