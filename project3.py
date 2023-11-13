@@ -14,7 +14,10 @@ import grin
 
 
 def main() -> None:
-    pass
+    commands = grin.take_user_grin_input()
+    convert_commands = grin.convert_to_grin_tokens(commands)
+    var_assignment = grin.let_conversion(convert_commands)
+    display_values = grin.print_conversion(convert_commands)
 
 if __name__ == '__main__':
     main()
