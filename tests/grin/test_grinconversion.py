@@ -46,23 +46,41 @@ class TestGrinConversion(unittest.TestCase):
     def test_print_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)
-        print_lines = print_conversion(convert_tokens)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
         compare = ["Hello Boo!"]
-        self.assertEqual(print_lines, compare)
+        self.assertEqual(values_to_print, compare)
 
     def test2_print_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)
-        print_lines = print_conversion(convert_tokens)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
         compare = ["Boo", 13.015625]
-        self.assertEqual(print_lines, compare)
+        self.assertEqual(values_to_print, compare)
 
     def test3_print_conversion(self):
         user_values = take_user_grin_input()
         convert_tokens = convert_to_grin_tokens(user_values)
-        print_lines = print_conversion(convert_tokens)
+        all_values = dict()
+        values_to_print = []
+        for line in convert_tokens:
+            if line[0].kind() == GrinTokenKind.LET:
+                let_conversion(line, all_values)
+            elif line[0].kind() == GrinTokenKind.PRINT:
+                print_conversion(line, all_values, values_to_print)
         compare = [4, 11.25, "Dog", "Cat", "Hi"]
-        self.assertEqual(print_lines, compare)
+        self.assertEqual(values_to_print, compare)
 
     def test_instr_innum_conversion(self):
         user_values = take_user_grin_input()

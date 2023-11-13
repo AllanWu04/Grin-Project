@@ -19,21 +19,15 @@ def let_conversion(line, values):
     return values
 
 
-def print_conversion(lines):
+def print_conversion(line, dict_of_values, values_to_print):
     """Returns a list of values that want to be printed and also prints values."""
-    lst_of_prints = []
-    all_variables_dict = let_conversion(lines)
-    for line in lines:
-        if line[0].kind() == GrinTokenKind.PRINT:
-            if line[1].kind() == GrinTokenKind.LITERAL_FLOAT or line[1].kind() == GrinTokenKind.LITERAL_INTEGER or line[1].kind() == GrinTokenKind.LITERAL_STRING:
-                lst_of_prints.append(line[1].value())
-            else:
-                for key, value in all_variables_dict.items():
-                    if line[1].text() == key:
-                        lst_of_prints.append(value)
-    for i in lst_of_prints:
-        print(i)
-    return lst_of_prints
+    if line[1].kind() == GrinTokenKind.LITERAL_FLOAT or line[1].kind() == GrinTokenKind.LITERAL_INTEGER or line[1].kind() == GrinTokenKind.LITERAL_STRING:
+        values_to_print.append(line[1].value())
+    else:
+        for key, value in dict_of_values.items():
+            if line[1].text() == key:
+                values_to_print.append(value)
+    return values_to_print
 
 
 def instr_and_innum_conversion(lines):
