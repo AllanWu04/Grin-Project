@@ -9,12 +9,12 @@ import unittest
 class TestInputValues(unittest.TestCase):
     def test_take_user_grin_input(self):
         print_message = take_user_grin_input()
-        compare = ["LET a \"Boo\"", "PRINT a"]
+        compare = ["LET a \"Boo\"", "PRINT a", '.']
         self.assertEqual(print_message, compare)
 
     def test2_take_user_grin_input(self):
         print_message = take_user_grin_input()
-        compare = []
+        compare = ['.']
         self.assertEqual(print_message, compare)
 
     def test_convert_grin_token(self):

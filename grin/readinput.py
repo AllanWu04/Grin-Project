@@ -10,6 +10,7 @@ def take_user_grin_input():
     while True:
         user = input()
         if user == '.' or user == 'END':
+            lines.append(user)
             break
         lines.append(user)
     return lines
