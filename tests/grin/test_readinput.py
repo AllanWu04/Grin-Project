@@ -7,12 +7,12 @@ from typing import Iterable
 import unittest
 
 class TestInputValues(unittest.TestCase):
-    def test_input_print_message(self):
+    def test_take_user_grin_input(self):
         print_message = take_user_grin_input()
         compare = ["LET a \"Boo\"", "PRINT a"]
         self.assertEqual(print_message, compare)
 
-    def test2_input_print_message(self):
+    def test2_take_user_grin_input(self):
         print_message = take_user_grin_input()
         compare = []
         self.assertEqual(print_message, compare)

@@ -26,6 +26,7 @@ def let_conversion(lines):
 
 
 def print_conversion(lines):
+    """Returns a list of values that want to be printed and also prints values."""
     lst_of_prints = []
     all_variables_dict = let_conversion(lines)
     for line in lines:
@@ -39,3 +40,22 @@ def print_conversion(lines):
     for i in lst_of_prints:
         print(i)
     return lst_of_prints
+
+
+def instr_and_innum_conversion(lines):
+    """Returns a list of inputs through INSTR and INNUM"""
+    current_values = let_conversion(lines)
+    for line in lines:
+        if line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
+            if line[0].kind() == GrinTokenKind.INNUM:
+                take_int_float = input()
+                if '.' in take_int_float:
+                    convert_to_float = float(take_int_float)
+                    current_values.update({line[1].text(): convert_to_float})
+                else:
+                    convert_to_int = int(take_int_float)
+                    current_values.update({line[1].text(): convert_to_int})
+            else:
+                take_str = input()
+                current_values.update({line[1].text(): take_str})
+    return current_values
