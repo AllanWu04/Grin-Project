@@ -30,3 +30,24 @@ class TestGrinConversion(unittest.TestCase):
         dict_of_values = let_conversion(convert_tokens)
         compare = {"A": "Hello", "B": 10, "C": 10, "D": "Dog", "E": "Dog"}
         self.assertEqual(dict_of_values, compare)
+
+    def test_print_conversion(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        print_lines = print_conversion(convert_tokens)
+        compare = ["Hello Boo!"]
+        self.assertEqual(print_lines, compare)
+
+    def test2_print_conversion(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        print_lines = print_conversion(convert_tokens)
+        compare = ["Boo", 13.015625]
+        self.assertEqual(print_lines, compare)
+
+    def test3_print_conversion(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        print_lines = print_conversion(convert_tokens)
+        compare = [4, 11.25, "Dog", "Cat", "Hi"]
+        self.assertEqual(print_lines, compare)

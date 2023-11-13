@@ -23,3 +23,19 @@ def let_conversion(lines):
                     else:  # If LET is making an existing variable to be an existing value
                         values.update({line[1].text(): value})
     return values
+
+
+def print_conversion(lines):
+    lst_of_prints = []
+    all_variables_dict = let_conversion(lines)
+    for line in lines:
+        if line[0].kind() == GrinTokenKind.PRINT:
+            if line[1].kind() == GrinTokenKind.LITERAL_FLOAT or line[1].kind() == GrinTokenKind.LITERAL_INTEGER or line[1].kind() == GrinTokenKind.LITERAL_STRING:
+                lst_of_prints.append(line[1].value())
+            else:
+                for key, value in all_variables_dict.items():
+                    if line[1].text() == key:
+                        lst_of_prints.append(value)
+    for i in lst_of_prints:
+        print(i)
+    return lst_of_prints
