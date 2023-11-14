@@ -47,6 +47,34 @@ class Addition(Arithmetic):
                         self._dict_of_values.update({key: value + self._dict_of_values.get(self._line[2].text())})
 
 
+class Subtraction(Arithmetic):
+    """Performs the subtraction operator with two values"""
+    def __init__(self, line, dict_of_values):
+        super().__init__(line)
+        self._dict_of_values = dict_of_values
+        self._subtractvalue1kind = line[1].kind()
+        self._subtractvalue2kind = line[2].kind()
+
+    def subtract_values(self):
+        if self.operation() == GrinTokenKind.SUB:
+            if self._line[1].text() not in self._dict_of_values.keys() and self._subtractvalue1kind == GrinTokenKind.IDENTIFIER:
+                self._dict_of_values.update({self._line[1].text(): 0})
+            if self._line[2].text() not in self._dict_of_values.keys() and self._subtractvalue2kind == GrinTokenKind.IDENTIFIER:
+                self._dict_of_values.update({self._line[2].text(): 0})
+            if self._subtractvalue2kind == GrinTokenKind.LITERAL_INTEGER or self._subtractvalue2kind == GrinTokenKind.LITERAL_FLOAT:
+                dict_copy = dict(self._dict_of_values)
+                for key, value in dict_copy.items():
+                    if key == self._line[1].text() and (type(value) == int or type(value) == float):
+                        self._dict_of_values.update({key: value - self._line[2].value()})
+            elif self._subtractvalue2kind == GrinTokenKind.IDENTIFIER:
+                identifier_value = self._dict_of_values.get(self._line[2].text())
+                dict_copy = dict(self._dict_of_values)
+                for key, value in dict_copy.items():
+                    if key == self._line[1].text():
+                        self._dict_of_values.update({key: value - identifier_value})
+
+
+
 
 
 
