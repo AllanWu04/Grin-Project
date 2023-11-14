@@ -19,9 +19,13 @@ class Addition(Arithmetic):
         self._addvalue2kind = line[2].kind()
 
     def add_values(self):
+        """Adds corresponding values as long as they follow designated rules"""
         if self.operation() == GrinTokenKind.ADD:
             if self._line[1].text() not in self._dict_of_values.keys() and self._addvalue1kind == GrinTokenKind.IDENTIFIER:
-                self._dict_of_values.update({self._line[1].text(): 0})
+                if type(self._line[2].value()) == str:
+                    raise RuntimeError
+                else:
+                    self._dict_of_values.update({self._line[1].text(): 0})
             if self._line[2].text() not in self._dict_of_values.keys() and self._addvalue2kind == GrinTokenKind.IDENTIFIER:
                 self._dict_of_values.update({self._line[2].text(): 0})
             if self._addvalue2kind == GrinTokenKind.LITERAL_INTEGER or self._addvalue2kind == GrinTokenKind.LITERAL_FLOAT:
@@ -37,14 +41,10 @@ class Addition(Arithmetic):
             else:
                 dict_copy = dict(self._dict_of_values)
                 for key, value in dict_copy.items():
-                    if key == self._line[1].text() and type(self._dict_of_values.get(self._line[2].text())) == type(value):
+                    if key == self._line[1].text() and (type(self._dict_of_values.get(self._line[2].text())) == type(value)
+                                                        or (type(self._dict_of_values.get(self._line[2].text())) == int and type(value) == float)
+                                                        or (type(self._dict_of_values.get(self._line[2].text())) == float and type(value) == int)):
                         self._dict_of_values.update({key: value + self._dict_of_values.get(self._line[2].text())})
-                    elif key == self._line[1].text() and (type(self._dict_of_values.get(self._line[2].text())) == int and type(value) == float):
-                        self._dict_of_values.update({key: value + self._dict_of_values.get(self._line[2].text())})
-                    elif key == self._line[1].text() and (type(self._dict_of_values.get(self._line[2].text())) == float and type(value) == int):
-                        self._dict_of_values.update({key: value + self._dict_of_values.get(self._line[2].text())})
-
-
 
 
 
