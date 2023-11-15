@@ -119,17 +119,20 @@ class ArithmeticTesting(unittest.TestCase):
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
-        for line in convert_tokens:
-            if line[0].kind() == GrinTokenKind.LET:
-                let_conversion(line, all_values)
-            elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
-            elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
-                instr_and_innum_conversion(line, all_values)
-            elif line[0].kind() == GrinTokenKind.ADD:
-                add = Addition(line, all_values)
-                add.add_values()
-        self.assertRaises(RuntimeError)
+        try:
+            for line in convert_tokens:
+                if line[0].kind() == GrinTokenKind.LET:
+                    let_conversion(line, all_values)
+                elif line[0].kind() == GrinTokenKind.PRINT:
+                    print_conversion(line, all_values, values_to_print)
+                elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
+                    instr_and_innum_conversion(line, all_values)
+                elif line[0].kind() == GrinTokenKind.ADD:
+                    add = Addition(line, all_values)
+                    add.add_values()
+            self.assertEqual({"X": 0, "Y": 0}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
 
     def test_subtract_values(self):
         user_values = take_user_grin_input()

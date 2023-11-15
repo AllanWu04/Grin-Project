@@ -22,28 +22,33 @@ class Addition(Arithmetic):
         """Adds corresponding values as long as they follow designated rules"""
         if self.operation() == GrinTokenKind.ADD:
             if self._line[1].text() not in self._dict_of_values.keys() and self._addvalue1kind == GrinTokenKind.IDENTIFIER:
-                if type(self._line[2].value()) == str:
-                    raise RuntimeError
-                else:
-                    self._dict_of_values.update({self._line[1].text(): 0})
+                self._dict_of_values.update({self._line[1].text(): 0})
             if self._line[2].text() not in self._dict_of_values.keys() and self._addvalue2kind == GrinTokenKind.IDENTIFIER:
                 self._dict_of_values.update({self._line[2].text(): 0})
             if self._addvalue2kind == GrinTokenKind.LITERAL_INTEGER or self._addvalue2kind == GrinTokenKind.LITERAL_FLOAT:
                 dict_copy = dict(self._dict_of_values)
+                check_str = type(self._dict_of_values.get(self._line[1].text())) == str
+                if check_str:
+                    raise RuntimeError
                 for key, value in dict_copy.items():
                     if key == self._line[1].text() and (type(value) == int or type(value) == float):
                         self._dict_of_values.update({key: value + self._line[2].value()})
             elif self._addvalue2kind == GrinTokenKind.LITERAL_STRING:
                 dict_copy = dict(self._dict_of_values)
+                check_num = type(self._dict_of_values.get(self._line[1].text())) == int or type(self._dict_of_values.get(self._line[1].text())) == float
+                if check_num:
+                    raise RuntimeError
                 for key, value in dict_copy.items():
                     if key == self._line[1].text() and type(value) == str:
                         self._dict_of_values.update({key: value + self._line[2].value()})
             else:
                 dict_copy = dict(self._dict_of_values)
+                check_str_num = type(dict_copy.get(self._line[1].text())) == str and (type(dict_copy.get(self._line[2].text())) == int or type(dict_copy.get(self._line[2].text())) == float)
+                check_num_str = (type(dict_copy.get(self._line[1].text())) == int or type(dict_copy.get(self._line[1].text())) == float) and type(dict_copy.get(self._line[2].text())) == str
+                if check_str_num or check_num_str:
+                    raise RuntimeError
                 for key, value in dict_copy.items():
-                    if key == self._line[1].text() and (type(self._dict_of_values.get(self._line[2].text())) == type(value)
-                                                        or (type(self._dict_of_values.get(self._line[2].text())) == int and type(value) == float)
-                                                        or (type(self._dict_of_values.get(self._line[2].text())) == float and type(value) == int)):
+                    if key == self._line[1].text():
                         self._dict_of_values.update({key: value + self._dict_of_values.get(self._line[2].text())})
 
 
