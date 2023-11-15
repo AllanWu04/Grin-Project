@@ -21,7 +21,50 @@ def test_mult_skeleton(convert_tokens, values_to_print, all_values):
             sub.subtract_values()
         elif line[0].kind() == GrinTokenKind.MULT:
             mult = Multiplication(line, all_values)
+            mult.multiply_values()
 
 
 class TestMultDiv(unittest.TestCase):
-    pass
+
+    def test_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": 6}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test2_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": 21.6}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test3_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": "BOOBOOBOO"}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test4_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
