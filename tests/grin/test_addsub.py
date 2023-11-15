@@ -1,7 +1,7 @@
 import unittest
 from grin.grinconversion import *
 from grin.readinput import *
-from grin.arithmetic import *
+from grin.addsub import *
 
 
 class ArithmeticTesting(unittest.TestCase):
