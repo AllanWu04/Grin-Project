@@ -61,6 +61,7 @@ class Subtraction(Arithmetic):
         self._subtractvalue2kind = line[2].kind()
 
     def subtract_values(self):
+        """Subtracts corresponding values as long as they follow corresponding rules"""
         if self.operation() == GrinTokenKind.SUB:
             if self._line[1].text() not in self._dict_of_values.keys() and self._subtractvalue1kind == GrinTokenKind.IDENTIFIER:
                 self._dict_of_values.update({self._line[1].text(): 0})
