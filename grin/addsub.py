@@ -78,7 +78,7 @@ class Subtraction(Arithmetic):
             elif self._subtractvalue2kind == GrinTokenKind.IDENTIFIER:
                 identifier_value = self._dict_of_values.get(self._line[2].text())
                 dict_copy = dict(self._dict_of_values)
-                check_str = type(dict_copy.get(self._line[1].text())) == str or type(dict_copy.get(self._line[2].text()))
+                check_str = type(dict_copy.get(self._line[1].text())) == str or type(dict_copy.get(self._line[2].text())) == str
                 if check_str:
                     raise RuntimeError
                 for key, value in dict_copy.items():
