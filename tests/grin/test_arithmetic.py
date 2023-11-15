@@ -263,5 +263,6 @@ class ArithmeticTesting(unittest.TestCase):
                 elif line[0].kind() == GrinTokenKind.SUB:
                     sub = Subtraction(line, all_values)
                     sub.subtract_values()
+            self.assertEqual({"X": 0, "Y": 0}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)

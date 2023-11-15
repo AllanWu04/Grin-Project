@@ -68,12 +68,18 @@ class Subtraction(Arithmetic):
                 self._dict_of_values.update({self._line[2].text(): 0})
             if self._subtractvalue2kind == GrinTokenKind.LITERAL_INTEGER or self._subtractvalue2kind == GrinTokenKind.LITERAL_FLOAT:
                 dict_copy = dict(self._dict_of_values)
+                check_str = type(dict_copy.get(self._line[1].text())) == str
+                if check_str:
+                    raise RuntimeError
                 for key, value in dict_copy.items():
                     if key == self._line[1].text() and (type(value) == int or type(value) == float):
                         self._dict_of_values.update({key: value - self._line[2].value()})
             elif self._subtractvalue2kind == GrinTokenKind.IDENTIFIER:
                 identifier_value = self._dict_of_values.get(self._line[2].text())
                 dict_copy = dict(self._dict_of_values)
+                check_str = type(dict_copy.get(self._line[1].text())) == str or type(dict_copy.get(self._line[2].text()))
+                if check_str:
+                    raise RuntimeError
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
                         self._dict_of_values.update({key: value - identifier_value})
