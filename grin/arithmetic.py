@@ -72,6 +72,8 @@ class Subtraction(Arithmetic):
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
                         self._dict_of_values.update({key: value - identifier_value})
+            else:
+                raise RuntimeError
 
 
 

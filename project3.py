@@ -30,6 +30,9 @@ def main() -> None:
                 elif line[0].kind() == grin.GrinTokenKind.ADD:
                     add = grin.Addition(line, all_var_values)
                     add.add_values()
+                elif line[0].kind() == grin.GrinTokenKind.SUB:
+                    sub = grin.Subtraction(line, all_var_values)
+                    sub.subtract_values()
                 elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
                     break
             for i in values_to_print:
