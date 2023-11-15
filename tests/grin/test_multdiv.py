@@ -68,3 +68,24 @@ class TestMultDiv(unittest.TestCase):
             test_mult_skeleton(convert_tokens, values_to_print, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
+
+    def test5_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": "DOGDOG"}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test6_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)

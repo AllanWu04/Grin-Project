@@ -29,3 +29,11 @@ class Multiplication(Arithmetic):
                     for key, value in dict_copy.items():
                         if key == self._line[1].text():
                             self._dict_of_values.update({key: value * self._line[2].value()})
+            elif self._multvalue2kind == GrinTokenKind.LITERAL_STRING:
+                dict_copy = dict(self._dict_of_values)
+                check_float = type(dict_copy.get(self._line[1].text())) == float
+                if check_float:
+                    raise RuntimeError
+                for key, value in dict_copy.items():
+                    if key == self._line[1].text():
+                        self._dict_of_values.update({key: value * self._line[2].value()})
