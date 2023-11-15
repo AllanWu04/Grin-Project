@@ -27,7 +27,7 @@ def test_mult_skeleton(convert_tokens, values_to_print, all_values):
 class TestMultDiv(unittest.TestCase):
 
     def test_multiply_values(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET X 2", "MULT X 3", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -38,7 +38,7 @@ class TestMultDiv(unittest.TestCase):
             self.assertRaises(RuntimeError)
 
     def test2_multiply_values(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET X 3", "MULT X 7.2", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -49,7 +49,7 @@ class TestMultDiv(unittest.TestCase):
             self.assertRaises(RuntimeError)
 
     def test3_multiply_values(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET X 3", "MULT X \"BOO\"", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -60,7 +60,7 @@ class TestMultDiv(unittest.TestCase):
             self.assertRaises(RuntimeError)
 
     def test4_multiply_values(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET X \"BOO\"", "MULT X 4.3", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -70,7 +70,17 @@ class TestMultDiv(unittest.TestCase):
             self.assertRaises(RuntimeError)
 
     def test5_multiply_values(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET X 5.3", "MULT X \"BOO\"", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test6_multiply_values(self):
+        user_values = ["LET X \"DOG\"", "MULT X 2", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -80,8 +90,8 @@ class TestMultDiv(unittest.TestCase):
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
-    def test6_multiply_values(self):
-        user_values = take_user_grin_input()
+    def test7_multiply_values(self):
+        user_values = ["LET X DOG", "MULT X 3.4", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -90,8 +100,8 @@ class TestMultDiv(unittest.TestCase):
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
-    def test7_multiply_values(self):
-        user_values = take_user_grin_input()
+    def test8_multiply_values(self):
+        user_values = ["MULT X Y", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -101,8 +111,8 @@ class TestMultDiv(unittest.TestCase):
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
-    def test8_multiply_values(self):
-        user_values = take_user_grin_input()
+    def test9_multiply_values(self):
+        user_values = ["LET X 1.25", "LET Y 2", "MULT X Y", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -112,8 +122,8 @@ class TestMultDiv(unittest.TestCase):
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
-    def test9_multiply_values(self):
-        user_values = take_user_grin_input()
+    def test10_multiply_values(self):
+        user_values = ["LET X \"BOO\"", "LET Y 4", "MULT X Y"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -123,8 +133,8 @@ class TestMultDiv(unittest.TestCase):
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
-    def test9_multiply_values(self):
-        user_values = take_user_grin_input()
+    def test11_multiply_values(self):
+        user_values = ["LET X \"BOO\"", "LET Y 4.32", "MULT X Y", "."]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
