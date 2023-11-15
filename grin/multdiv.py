@@ -37,3 +37,14 @@ class Multiplication(Arithmetic):
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
                         self._dict_of_values.update({key: value * self._line[2].value()})
+            else:
+                dict_copy = dict(self._dict_of_values)
+                check_invalid1 = type(dict_copy.get(self._line[1].text())) == float and type(
+                    dict_copy.get(self._line[2].text())) == str
+                check_invalid2 = type(dict_copy.get(self._line[1].text())) == str and type(
+                    dict_copy.get(self._line[2].text())) == float
+                if check_invalid1 or check_invalid2:
+                    raise RuntimeError
+                for key, value in dict_copy.items():
+                    if key == self._line[1].text():
+                        self._dict_of_values.update({key: value * self._dict_of_values.get(self._line[2].text())})

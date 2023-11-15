@@ -89,3 +89,46 @@ class TestMultDiv(unittest.TestCase):
             test_mult_skeleton(convert_tokens, values_to_print, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
+
+    def test7_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": 0, "Y": 0}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test8_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": 2.5, "Y": 2}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test9_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"X": "BOOBOOBOOBOO", "Y": 4}, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test9_multiply_values(self):
+        user_values = take_user_grin_input()
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
