@@ -61,7 +61,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
         compare = ["Hello Boo!"]
         self.assertEqual(values_to_print, compare)
 
@@ -74,7 +74,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
         compare = ["Boo", 13.015625]
         self.assertEqual(values_to_print, compare)
 
@@ -87,7 +87,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
         compare = [4, 11.25, "Dog", "Cat", "Hi"]
         self.assertEqual(values_to_print, compare)
 
@@ -100,7 +100,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
         compare = [4, 11.25, 0, "Hi"]
         self.assertEqual(values_to_print, compare)
     def test_instr_innum_conversion(self):
@@ -112,7 +112,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
         compare = {"X": 11}
@@ -127,7 +127,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
         compare = {"X": "Hello"}
@@ -142,7 +142,7 @@ class TestGrinConversion(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
         compare = {"X": 92.3}

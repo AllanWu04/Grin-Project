@@ -15,7 +15,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -33,7 +33,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -51,7 +51,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -69,7 +69,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -87,7 +87,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -105,7 +105,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -124,7 +124,7 @@ class ArithmeticTesting(unittest.TestCase):
                 if line[0].kind() == GrinTokenKind.LET:
                     let_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.PRINT:
-                    print_conversion(line, all_values, values_to_print)
+                    print_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                     instr_and_innum_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.ADD:
@@ -143,7 +143,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -165,7 +165,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -187,7 +187,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -209,7 +209,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -231,7 +231,7 @@ class ArithmeticTesting(unittest.TestCase):
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values, values_to_print)
+                print_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                 instr_and_innum_conversion(line, all_values)
             elif line[0].kind() == GrinTokenKind.ADD:
@@ -254,7 +254,7 @@ class ArithmeticTesting(unittest.TestCase):
                 if line[0].kind() == GrinTokenKind.LET:
                     let_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.PRINT:
-                    print_conversion(line, all_values, values_to_print)
+                    print_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                     instr_and_innum_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.ADD:
@@ -276,7 +276,7 @@ class ArithmeticTesting(unittest.TestCase):
                 if line[0].kind() == GrinTokenKind.LET:
                     let_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.PRINT:
-                    print_conversion(line, all_values, values_to_print)
+                    print_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.INNUM or line[0].kind() == GrinTokenKind.INSTR:
                     instr_and_innum_conversion(line, all_values)
                 elif line[0].kind() == GrinTokenKind.ADD:

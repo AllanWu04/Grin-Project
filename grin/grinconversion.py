@@ -22,18 +22,17 @@ def let_conversion(line, values):
     return values
 
 
-def print_conversion(line, dict_of_values, values_to_print):
-    """Returns a list of values that want to be printed and also prints values."""
+def print_conversion(line, dict_of_values):
+    """Prints value according to the line value"""
     if line[1].kind() == GrinTokenKind.LITERAL_FLOAT or line[1].kind() == GrinTokenKind.LITERAL_INTEGER or line[1].kind() == GrinTokenKind.LITERAL_STRING:
-        values_to_print.append(line[1].value())
+        print(line[1].value())
     else:
         if line[1].text() in dict_of_values.keys():
             for key, value in dict_of_values.items():
                 if line[1].text() == key:
-                    values_to_print.append(value)
+                    print(value)
         else:
-            values_to_print.append(0)
-    return values_to_print
+            print(0)
 
 
 def instr_and_innum_conversion(line, dict_of_values):
@@ -49,4 +48,3 @@ def instr_and_innum_conversion(line, dict_of_values):
     else:
         take_str = input()
         dict_of_values.update({line[1].text(): take_str})
-    return dict_of_values

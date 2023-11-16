@@ -24,7 +24,7 @@ def main() -> None:
                 if line[0].kind() == grin.GrinTokenKind.LET:
                     grin.let_conversion(line, all_var_values)
                 elif line[0].kind() == grin.GrinTokenKind.PRINT:
-                    grin.print_conversion(line, all_var_values, values_to_print)
+                    grin.print_conversion(line, all_var_values)
                 elif line[0].kind() == grin.GrinTokenKind.INNUM or line[0].kind() == grin.GrinTokenKind.INSTR:
                     grin.instr_and_innum_conversion(line, all_var_values)
                 elif line[0].kind() == grin.GrinTokenKind.ADD:
@@ -35,8 +35,6 @@ def main() -> None:
                     sub.subtract_values()
                 elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
                     break
-            for i in values_to_print:
-                print(i)
         except RuntimeError:
             print("Sorry, a runtime error has occurred. Please try again!")
 
