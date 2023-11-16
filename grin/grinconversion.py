@@ -27,13 +27,16 @@ def print_conversion(line, dict_of_values):
     """Prints value according to the line value"""
     if line[1].kind() == GrinTokenKind.LITERAL_FLOAT or line[1].kind() == GrinTokenKind.LITERAL_INTEGER or line[1].kind() == GrinTokenKind.LITERAL_STRING:
         print(line[1].value())
+        return line[1].value()
     else:
         if line[1].text() in dict_of_values.keys():
             for key, value in dict_of_values.items():
                 if line[1].text() == key:
                     print(value)
+                    return value
         else:
             print(0)
+            return 0
 
 
 def instr_and_innum_conversion(line, dict_of_values):
