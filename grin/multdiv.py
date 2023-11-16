@@ -48,3 +48,11 @@ class Multiplication(Arithmetic):
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
                         self._dict_of_values.update({key: value * self._dict_of_values.get(self._line[2].text())})
+
+class Division(Arithmetic):
+    """Performs division operation with two values"""
+    def __init__(self, line, dict_of_values):
+        super().__init__(line)
+        self._dict_of_values = dict_of_values
+        self._multvalue1kind = self._line[1].kind()
+        self._multvalue2kind = self._line[2].kind()
