@@ -33,6 +33,9 @@ def main() -> None:
                 elif line[0].kind() == grin.GrinTokenKind.SUB:
                     sub = grin.Subtraction(line, all_var_values)
                     sub.subtract_values()
+                elif line[0].kind() == grin.GrinTokenKind.MULT:
+                    mult = grin.Multiplication(line, all_var_values)
+                    mult.multiply_values()
                 elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
                     break
         except RuntimeError:
