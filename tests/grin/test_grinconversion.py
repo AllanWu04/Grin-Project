@@ -104,7 +104,7 @@ class TestGrinConversion(unittest.TestCase):
         compare = [4, 11.25, 0, "Hi"]
         self.assertEqual(values_to_print, compare)
     def test_instr_innum_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["INNUM X"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -119,7 +119,7 @@ class TestGrinConversion(unittest.TestCase):
         self.assertEqual(all_values, compare)
 
     def test2_instr_innum_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["INSTR X"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
@@ -134,7 +134,7 @@ class TestGrinConversion(unittest.TestCase):
         self.assertEqual(all_values, compare)
 
     def test3_instr_innum_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["INNUM X"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         values_to_print = []
