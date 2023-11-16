@@ -16,7 +16,8 @@ def let_conversion(line, values):
         looping_copy = dict(values)
         if line[2].text() in looping_copy.keys():
             for key, value in looping_copy.items():
-                values.update({line[1].text(): value})
+                if key == line[2].text():
+                    values.update({line[1].text(): value})
         else:
             values.update({line[1].text(): 0})
     return values

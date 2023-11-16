@@ -4,7 +4,7 @@ from grin.readinput import *
 class TestGrinConversion(unittest.TestCase):
 
     def test_let_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET NAME \"Boo\"", "LET AGE 13.015625"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         for line in convert_tokens:
@@ -14,7 +14,7 @@ class TestGrinConversion(unittest.TestCase):
         self.assertEqual(all_values, compare)
 
     def test2_let_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET TEST \"DOG\"", "LET X 10", "LET TEST X"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         for line in convert_tokens:
@@ -24,7 +24,7 @@ class TestGrinConversion(unittest.TestCase):
         self.assertEqual(all_values, compare)
 
     def test3_let_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET T1 0", "LET T2 5", "LET T3 T1"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         for line in convert_tokens:
@@ -34,7 +34,7 @@ class TestGrinConversion(unittest.TestCase):
         self.assertEqual(all_values, compare)
 
     def test4_let_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET A \"Hello\"", "LET B 10", "LET C B", "LET D \"Dog\"", "LET E D"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         for line in convert_tokens:
@@ -44,13 +44,13 @@ class TestGrinConversion(unittest.TestCase):
         self.assertEqual(all_values, compare)
 
     def test5_let_conversion(self):
-        user_values = take_user_grin_input()
+        user_values = ["LET A B"]
         convert_tokens = convert_to_grin_tokens(user_values)
         all_values = dict()
         for line in convert_tokens:
             if line[0].kind() == GrinTokenKind.LET:
                 let_conversion(line, all_values)
-        compare = {"A": 0}
+        compare = {"A": 0, "B": 0}
         self.assertEqual(all_values, compare)
     def test_print_conversion(self):
         user_values = take_user_grin_input()
