@@ -43,18 +43,18 @@ class TestLabelGoSubGoTo(unittest.TestCase):
         all_values = dict()
         all_labels = label_line(convert_tokens)
         line_pointer = 0
-        for line in convert_tokens:
-            if line[0].kind() == GrinTokenKind.LET:
-                let_conversion(line, all_values)
-                line_pointer = line[0].location().line()
-            elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values)
-                line_pointer = line[0].location().line()
-            elif line[0].kind() == GrinTokenKind.GOTO:
-                goto_command = GoTo(line, convert_tokens, line_pointer)
-                goto_command.jump_lines(all_values, all_labels)
-                break
-            elif line[0].kind() == GrinTokenKind.END or line[0].kind() == GrinTokenKind.DOT:
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOTO:
+                goto_command = GoTo(convert_tokens[line_pointer], convert_tokens, line_pointer)
+                new_index = goto_command.jump_lines()
+                line_pointer = new_index
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][0].kind() == GrinTokenKind.DOT:
                 break
         self.assertEqual(all_values, {"A": 1})
 
@@ -65,17 +65,41 @@ class TestLabelGoSubGoTo(unittest.TestCase):
         all_values = dict()
         all_labels = label_line(convert_tokens)
         line_pointer = 0
-        for line in convert_tokens:
-            if line[0].kind() == GrinTokenKind.LET:
-                let_conversion(line, all_values)
-                line_pointer = line[0].location().line()
-            elif line[0].kind() == GrinTokenKind.PRINT:
-                print_conversion(line, all_values)
-                line_pointer = line[0].location().line()
-            elif line[0].kind() == GrinTokenKind.GOTO:
-                goto_command = GoTo(line, convert_tokens, line_pointer)
-                goto_command.jump_lines(all_values, all_labels)
-                break
-            elif line[0].kind() == GrinTokenKind.END or line[0].kind() == GrinTokenKind.DOT:
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOTO:
+                goto_command = GoTo(convert_tokens[line_pointer], convert_tokens, line_pointer)
+                new_index = goto_command.jump_lines()
+                line_pointer = new_index
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][0].kind() == GrinTokenKind.DOT:
                 break
         self.assertEqual(all_values, {"C": 4, "Z": 5})
+
+    def test3_goto(self):
+        user_values = ["LET Z 5", "GOTO 10", "LET C 4", "PRINT C",
+                       "PRINT Z", "END", "PRINT C", "PRINT Z", "GOTO -6", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        try:
+            while line_pointer < len(convert_tokens):
+                if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                    let_conversion(convert_tokens[line_pointer], all_values)
+                    line_pointer += 1
+                elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                    print_conversion(convert_tokens[line_pointer], all_values)
+                    line_pointer += 1
+                elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOTO:
+                    goto_command = GoTo(convert_tokens[line_pointer], convert_tokens, line_pointer)
+                    new_index = goto_command.jump_lines()
+                    line_pointer = new_index
+                elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][0].kind() == GrinTokenKind.DOT:
+                    break
+        except InvalidLineError:
+            self.assertRaises(InvalidLineError)
