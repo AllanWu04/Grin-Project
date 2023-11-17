@@ -45,7 +45,7 @@ class GoTo:
         else:
             self._condition = self._value[2:]
 
-    def jump_lines(self) -> int:
+    def jump_lines(self, dict_of_values, dict_of_labels) -> int:
         """Performs a jump to a value"""
         if self._value[1].kind() == GrinTokenKind.LITERAL_INTEGER:
             pass_max_lines = self._line_pointer + self._value[1].value() > len(self._total_commands)
@@ -55,4 +55,13 @@ class GoTo:
             else:
                 self._line_pointer += self._value[1].value()
                 return self._line_pointer
+        elif self._value[1].kind() == GrinTokenKind.LITERAL_STRING:
+            valid_label = self._value[1].value() in dict_of_labels.keys()
+            get_line_of_label = dict_of_labels.get(self._value[1].value())
+            if not valid_label:
+                raise InvalidLineError
+            else:
+                self._line_pointer = get_line_of_label - 1
+                return self._line_pointer
+
 
