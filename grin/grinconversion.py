@@ -20,6 +20,7 @@ def let_conversion(line, values):
                     values.update({line[1].text(): value})
         else:
             values.update({line[1].text(): 0})
+            values.update({line[2].text(): 0})
     return values
 
 
