@@ -155,3 +155,7 @@ class GoTo:
                 else:
                     raise RuntimeError
 
+class GoSub(GoTo):
+    """Performs a jump given a label, variable, or int, but can also go back to itself with return"""
+    def __init__(self):
+        super().__init__()

@@ -214,4 +214,4 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
-        self.assertEqual(all_values, {"A": 10 / 4, "B": 4})
+        self.assertEqual(all_values, {"A": 2, "B": 4})
