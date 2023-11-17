@@ -18,12 +18,12 @@ class TestInputValues(unittest.TestCase):
         self.assertEqual(print_message, compare)
 
     def test_convert_grin_token(self):
-        grin_values = take_user_grin_input()
+        grin_values = ["LET A B"]
         convert = convert_to_grin_tokens(grin_values)
         check_if_token_obj = convert[0][0]
         self.assertEqual(type(check_if_token_obj), GrinToken)
 
     def test2_convert_grin_token(self):
-        grin_values = take_user_grin_input()
+        grin_values = ["Let a b"]
         convert = convert_to_grin_tokens(grin_values)
         self.assertRaises(GrinParseError)
