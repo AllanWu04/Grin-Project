@@ -5,7 +5,7 @@ from grin.addsub import *
 from grin.multdiv import *
 
 
-def test_mult_skeleton(convert_tokens, values_to_print, all_values):
+def test_multdiv_skeleton(convert_tokens, values_to_print, all_values):
     for line in convert_tokens:
         if line[0].kind() == GrinTokenKind.LET:
             let_conversion(line, all_values)
@@ -22,6 +22,9 @@ def test_mult_skeleton(convert_tokens, values_to_print, all_values):
         elif line[0].kind() == GrinTokenKind.MULT:
             mult = Multiplication(line, all_values)
             mult.multiply_values()
+        elif line[0].kind() == GrinTokenKind.DIV:
+            div = Division(line, all_values)
+            div.divide_values()
 
 
 class TestMultDiv(unittest.TestCase):
@@ -32,7 +35,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": 6}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -43,7 +46,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": 21.6}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -54,7 +57,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": "BOOBOOBOO"}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -65,7 +68,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
@@ -75,7 +78,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
@@ -85,7 +88,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": "DOGDOG"}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -96,7 +99,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
 
@@ -106,7 +109,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": 0, "Y": 0}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -117,7 +120,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": 2.5, "Y": 2}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -128,7 +131,7 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
             self.assertEqual({"X": "BOOBOOBOOBOO", "Y": 4}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
@@ -139,6 +142,37 @@ class TestMultDiv(unittest.TestCase):
         all_values = dict()
         values_to_print = []
         try:
-            test_mult_skeleton(convert_tokens, values_to_print, all_values)
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test_div_values(self):
+        user_values = ["DIV A B"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test2_div_values(self):
+        user_values = ["LET A 10", "DIV A 0"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test3_div_values(self):
+        user_values = ["LET A 10", "DIV A 5"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual({"A": 2}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
