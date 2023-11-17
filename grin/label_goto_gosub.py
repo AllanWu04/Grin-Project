@@ -128,7 +128,7 @@ class GoTo:
                 dict_of_values.update({self._condition[1].text(): 0})
             if check_value2_exist:
                 dict_of_values.update({self._condition[3].text(): 0})
-            if type(dict_of_values.get(self._condition[1].text())) == str:
+            if type(dict_of_values.get(self._condition[1].text())) == str or self._condition[1].kind() == GrinTokenKind.LITERAL_STRING:
                 get_kind_compare_value = self._condition[3].kind()
                 if get_kind_compare_value == GrinTokenKind.LITERAL_STRING:
                     return self.perform_operation_with_literal(get_comparison_operator, dict_of_values)
