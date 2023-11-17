@@ -68,17 +68,25 @@ class Division(Arithmetic):
                 dict_copy = dict(self._dict_of_values)
                 str_first_val = type(dict_copy.get(self._line[1].text())) == str
                 check_if_zero = self._line[2].value() == 0 or self._line[2].value == 0.0
+                check_int = type(dict_copy.get(self._line[1].text())) == int or type(dict_copy.get(self._line[2].text())) == int
                 if check_if_zero or str_first_val:
                     raise RuntimeError
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
-                        self._dict_of_values.update({key: value / self._line[2].value()})
+                        if check_int:
+                            self._dict_of_values.update({key: value // self._line[2].value()})
+                        else:
+                            self._dict_of_values.update({key: value / self._line[2].value()})
             else:
                 dict_copy = dict(self._dict_of_values)
                 str_val = type(dict_copy.get(self._line[1].text())) == str or type(dict_copy.get(self._line[2].text())) == str
+                check_int = type(dict_copy.get(self._line[1].text())) == int or type(dict_copy.get(self._line[2].text())) == int
                 check_zero = dict_copy.get(self._line[2].text()) == 0 or dict_copy.get(self._line[2].text()) == 0.0
                 if str_val or check_zero:
                     raise RuntimeError
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
-                        self._dict_of_values.update({key: value / self._dict_of_values.get(self._line[2].text())})
+                        if check_int:
+                            self._dict_of_values.update({key: value // self._dict_of_values.get(self._line[2].text())})
+                        else:
+                            self._dict_of_values.update({key: value / self._dict_of_values.get(self._line[2].text())})
