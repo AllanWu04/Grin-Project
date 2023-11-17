@@ -17,7 +17,7 @@ def main() -> None:
     commands = grin.take_user_grin_input()
     convert_commands = grin.convert_to_grin_tokens(commands)
     all_var_values = dict()
-    values_to_print = []
+    all_label_lines = grin.label_line(convert_commands)
     if convert_commands is not None:
         try:
             for line in convert_commands:
@@ -39,6 +39,12 @@ def main() -> None:
                 elif line[0].kind() == grin.GrinTokenKind.DIV:
                     div = grin.Division(line, all_var_values)
                     div.divide_values()
+                elif line[0].kind() == grin.GrinTokenKind.IDENTIFIER and line[1].kind() == grin.GrinTokenKind.COLON:
+                    get_label_command = line[2:]
+                    if get_label_command[0].kind() == grin.GrinTokenKind.END or get_label_command[0].kind() == grin.GrinTokenKind.DOT:
+                        break
+                    else:
+                        grin.encountered_label_line(line, all_var_values)
                 elif line[0].kind() == grin.GrinTokenKind.END or line[0].kind() == grin.GrinTokenKind.DOT:
                     break
         except RuntimeError:

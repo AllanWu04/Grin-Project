@@ -22,3 +22,4 @@ from grin.readinput import *
 from grin.grinconversion import *
 from grin.addsub import *
 from grin.multdiv import *
+from grin.label_goto_gosub import *
