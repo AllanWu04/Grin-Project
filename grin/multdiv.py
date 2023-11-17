@@ -73,3 +73,12 @@ class Division(Arithmetic):
                 for key, value in dict_copy.items():
                     if key == self._line[1].text():
                         self._dict_of_values.update({key: value / self._line[2].value()})
+            else:
+                dict_copy = dict(self._dict_of_values)
+                str_val = type(dict_copy.get(self._line[1].text())) == str or type(dict_copy.get(self._line[2].text())) == str
+                check_zero = dict_copy.get(self._line[2].text()) == 0 or dict_copy.get(self._line[2].text()) == 0.0
+                if str_val or check_zero:
+                    raise RuntimeError
+                for key, value in dict_copy.items():
+                    if key == self._line[1].text():
+                        self._dict_of_values.update({key: value / self._dict_of_values.get(self._line[2].text())})

@@ -176,3 +176,42 @@ class TestMultDiv(unittest.TestCase):
             self.assertEqual({"A": 2}, all_values)
         except RuntimeError:
             self.assertRaises(RuntimeError)
+
+    def test4_div_values(self):
+        user_values = ["LET A 10", "DIV A B"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test5_div_values(self):
+        user_values = ["LET A 10", "LET B \"Hi\"", "DIV A B"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test6_div_values(self):
+        user_values = ["DIV A 5"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        try:
+            test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+            self.assertEqual(all_values, {"A": 0})
+        except RuntimeError:
+            self.assertRaises(RuntimeError)
+
+    def test7_div_values(self):
+        user_values = ["LET A 10", "LET B 4", "DIV A B"]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        values_to_print = []
+        test_multdiv_skeleton(convert_tokens, values_to_print, all_values)
+        self.assertEqual(all_values, {"A": 10 / 4, "B": 4})
