@@ -52,12 +52,22 @@ def main() -> None:
                     if get_label_command[0].kind() == grin.GrinTokenKind.END or get_label_command[0].kind() == grin.GrinTokenKind.DOT:
                         break
                     else:
-                        grin.encountered_label_line(convert_commands[line_tracker], all_var_values)
+                        grin.encountered_label_line(get_label_command, all_var_values)
                     line_tracker += 1
+                elif convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.GOTO:
+                    goto_command = grin.GoTo(convert_commands[line_tracker], convert_commands, line_tracker)
+                    if goto_command.check_condition(all_var_values):
+                        line_num = goto_command.jump_lines(all_var_values, all_label_lines)
+                        line_tracker = line_num
+                    else:
+                        line_tracker += 1
+                        continue
                 elif convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.END or convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.DOT:
                     break
         except RuntimeError:
             print("Sorry, a runtime error has occurred. Please try again!")
+        except grin.InvalidLineError:
+            print("Sorry, the line you inputted is out of bounds or is an invalid value!")
 
 if __name__ == '__main__':
     main()

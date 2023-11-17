@@ -34,6 +34,8 @@ def encountered_label_line(line, dict_of_values):
 
 class InvalidLineError(Exception):
     pass
+
+
 class GoTo:
     """Performs a jump according to a given label, line number, or int variable"""
     def __init__(self, line, total_commands, line_pointer):
@@ -152,3 +154,4 @@ class GoTo:
                         raise RuntimeError
                 else:
                     raise RuntimeError
+
