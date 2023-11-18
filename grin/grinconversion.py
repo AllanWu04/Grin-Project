@@ -4,7 +4,7 @@ from grin.token import GrinTokenCategory, GrinTokenKind, GrinToken
 from grin.parsing import parse, GrinParseError
 
 
-def let_conversion(line, values):
+def let_conversion(line, values) -> dict:
     """Returns a dictionary that contain the variable and the value it's assigned"""
     if line[2].kind() == GrinTokenKind.LITERAL_STRING:
         values.update({line[1].text(): line[2].value()})
@@ -40,7 +40,7 @@ def print_conversion(line, dict_of_values):
             return 0
 
 
-def instr_and_innum_conversion(line, dict_of_values):
+def instr_and_innum_conversion(line, dict_of_values) -> None:
     """Returns a list of inputs through INSTR and INNUM"""
     if line[0].kind() == GrinTokenKind.INNUM:
         take_int_float = input()
