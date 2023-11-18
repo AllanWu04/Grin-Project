@@ -981,3 +981,445 @@ class TestLabelGoSubGoTo(unittest.TestCase):
             elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][0].kind() == GrinTokenKind.DOT:
                 break
         self.assertEqual(all_values, {"A": 3})
+
+    def test_line_hop_2_lit_vals(self):
+        user_values = ["LET A 1", "GOSUB 2 IF 3 > 2", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1})
+
+    def test2_line_hop_2_lit_vals(self):
+        user_values = ["LET A 1", "GOSUB 2 IF 3 >= 2", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1})
+
+    def test3_line_hop_2_lit_vals(self):
+        user_values = ["LET A 1", "GOSUB 2 IF 2 <= 2", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1})
+
+    def test4_line_hop_2_lit_vals(self):
+        user_values = ["LET A 1", "GOSUB 2 IF 1 < 2", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1})
+
+    def test5_line_hop_2_lit_vals(self):
+        user_values = ["LET A 1", "GOSUB 2 IF 1 <> 2", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1})
+
+    def test6_line_hop_2_lit_vals(self):
+        user_values = ["LET A 1", "GOSUB 2 IF 2 = 2", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1})
+
+    def test_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 4", "GOSUB 2 IF 4 = X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 4})
+
+    def test2_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 3", "GOSUB 2 IF 4 <> X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 3})
+
+    def test3_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 3", "GOSUB 2 IF 4 > X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 3})
+
+    def test4_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 4", "GOSUB 2 IF 4 >= X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 4})
+
+    def test5_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 3", "GOSUB 2 IF 4 > X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 3})
+
+    def test6_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 8", "GOSUB 2 IF 4 < X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 8})
+
+    def test7_line_hop_lit_id(self):
+        user_values = ["LET A 1", "LET X 8", "GOSUB 2 IF 4 <= X", "LET A 3", "PRINT A", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][
+                0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 1, "X": 8})
