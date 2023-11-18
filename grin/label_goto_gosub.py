@@ -101,6 +101,21 @@ class GoTo:
         elif get_comparison_operator == GrinTokenKind.NOT_EQUAL:
             return dict_copy.get(self._condition[1].text()) != self._condition[3].value()
 
+    def perform_operation_with_two_literal(self, get_comparison_operator) -> bool:
+        """Returns a Boolean of the comparison of values"""
+        if get_comparison_operator == GrinTokenKind.GREATER_THAN:
+            return self._condition[1].value() > self._condition[3].value()
+        elif get_comparison_operator == GrinTokenKind.LESS_THAN:
+            return self._condition[1].value() < self._condition[3].value()
+        elif get_comparison_operator == GrinTokenKind.GREATER_THAN_OR_EQUAL:
+            return self._condition[1].value() >= self._condition[3].value()
+        elif get_comparison_operator == GrinTokenKind.LESS_THAN_OR_EQUAL:
+            return self._condition[1].value() <= self._condition[3].value()
+        elif get_comparison_operator == GrinTokenKind.EQUAL:
+            return self._condition[1].value() == self._condition[3].value()
+        elif get_comparison_operator == GrinTokenKind.NOT_EQUAL:
+            return self._condition[1].value() != self._condition[3].value()
+
     def perform_operation_with_identifier(self, get_comparison_operator, dict_copy) -> bool:
         """Returns a Boolean of comparison of identifiers"""
         if get_comparison_operator == GrinTokenKind.GREATER_THAN:
@@ -116,6 +131,20 @@ class GoTo:
         elif get_comparison_operator == GrinTokenKind.NOT_EQUAL:
             return dict_copy.get(self._condition[1].text()) != dict_copy.get(self._condition[3].text())
 
+    def perform_operation_with_lit_identifier(self, get_comparison_operator, dict_copy) -> bool:
+        """Returns a Boolean of comparison of identifiers"""
+        if get_comparison_operator == GrinTokenKind.GREATER_THAN:
+            return self._condition[1].value() > dict_copy.get(self._condition[3].text())
+        elif get_comparison_operator == GrinTokenKind.LESS_THAN:
+            return self._condition[1].value() < dict_copy.get(self._condition[3].text())
+        elif get_comparison_operator == GrinTokenKind.GREATER_THAN_OR_EQUAL:
+            return self._condition[1].value() >= dict_copy.get(self._condition[3].text())
+        elif get_comparison_operator == GrinTokenKind.LESS_THAN_OR_EQUAL:
+            return self._condition[1].value() <= dict_copy.get(self._condition[3].text())
+        elif get_comparison_operator == GrinTokenKind.EQUAL:
+            return self._condition[1].value() == dict_copy.get(self._condition[3].text())
+        elif get_comparison_operator == GrinTokenKind.NOT_EQUAL:
+            return self._condition[1].value() != dict_copy.get(self._condition[3].text())
 
     def check_condition(self, dict_of_values) -> bool:
         """Checks to see what condition has to be met to execute."""
@@ -132,26 +161,36 @@ class GoTo:
                 dict_of_values.update({self._condition[3].text(): 0})
             if type(dict_of_values.get(self._condition[1].text())) == str or self._condition[1].kind() == GrinTokenKind.LITERAL_STRING:
                 get_kind_compare_value = self._condition[3].kind()
-                if get_kind_compare_value == GrinTokenKind.LITERAL_STRING:
+                if get_kind_compare_value == GrinTokenKind.LITERAL_STRING and self._condition[1].kind() == GrinTokenKind.IDENTIFIER:
                     return self.perform_operation_with_literal(get_comparison_operator, dict_of_values)
                 elif get_kind_compare_value == GrinTokenKind.IDENTIFIER:
                     get_identifier_value = dict_of_values.get(self._condition[3].text())
+                    if self._condition[1].kind() == GrinTokenKind.LITERAL_STRING:
+                        return self.perform_operation_with_lit_identifier(get_comparison_operator, dict_of_values)
                     if type(get_identifier_value) == str:
                         return self.perform_operation_with_identifier(get_comparison_operator, dict_of_values)
                     else:
                         raise RuntimeError
+                elif get_kind_compare_value == GrinTokenKind.LITERAL_STRING and self._condition[1].kind() == GrinTokenKind.LITERAL_STRING:
+                    return self.perform_operation_with_two_literal(get_kind_compare_value)
                 else:
                     raise RuntimeError
             else:
                 get_kind_compare_value = self._condition[3].kind()
                 if get_kind_compare_value == GrinTokenKind.LITERAL_INTEGER or get_kind_compare_value == GrinTokenKind.LITERAL_FLOAT:
-                    return self.perform_operation_with_literal(get_comparison_operator, dict_of_values)
+                    if self._condition[1].kind() == GrinTokenKind.LITERAL_FLOAT or self._condition[1].kind() == GrinTokenKind.LITERAL_INTEGER:
+                        return self.perform_operation_with_two_literal(get_comparison_operator)
+                    else:
+                        return self.perform_operation_with_literal(get_comparison_operator, dict_of_values)
                 elif get_kind_compare_value == GrinTokenKind.IDENTIFIER:
+                    if self._condition[1].kind() == GrinTokenKind.LITERAL_INTEGER or self._condition[1].kind() == GrinTokenKind.LITERAL_FLOAT:
+                        return self.perform_operation_with_lit_identifier(get_comparison_operator, dict_of_values)
                     get_identifier_value = dict_of_values.get(self._condition[3].text())
                     if type(get_identifier_value) == int or type(get_identifier_value) == float:
                         return self.perform_operation_with_identifier(get_comparison_operator, dict_of_values)
                     else:
                         raise RuntimeError
+
                 else:
                     raise RuntimeError
 
