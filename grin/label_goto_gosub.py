@@ -155,7 +155,18 @@ class GoTo:
                 else:
                     raise RuntimeError
 
+
+class ReturnWithNoGoSubError(Exception):
+    pass
+
+
 class GoSub(GoTo):
     """Performs a jump given a label, variable, or int, but can also go back to itself with return"""
-    def __init__(self):
-        super().__init__()
+    def __init__(self, line, total_lines, line_pointer, return_lst):
+        super().__init__(line, total_lines, line_pointer)
+        self._return_lst = return_lst
+
+    def add_line_of_gosub(self):
+        """Return a list of line numbers where GOSUB occurred"""
+        self._return_lst.append(self._value[0].location().line())
+        return self._return_lst

@@ -947,3 +947,37 @@ class TestLabelGoSubGoTo(unittest.TestCase):
                     break
         except RuntimeError:
             self.assertRaises(RuntimeError)
+
+    def test_goto_add_line_num(self):
+        user_values = ["LET A 1", "GOSUB 5", "PRINT A", "END", "LET A 3", "RETURN", "PRINT A",
+                       "LET A 2", "GOSUB -4", "PRINT A", "RETURN", "."]
+        convert_tokens = convert_to_grin_tokens(user_values)
+        all_values = dict()
+        all_labels = label_line(convert_tokens)
+        line_pointer = 0
+        lst_of_gosub = []
+        while line_pointer < len(convert_tokens):
+            if convert_tokens[line_pointer][0].kind() == GrinTokenKind.LET:
+                let_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.PRINT:
+                print_conversion(convert_tokens[line_pointer], all_values)
+                line_pointer += 1
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.GOSUB:
+                gosub_command = GoSub(convert_tokens[line_pointer], convert_tokens, line_pointer, lst_of_gosub)
+                if gosub_command.check_condition(all_values):
+                    new_index = gosub_command.jump_lines(all_values, all_labels)
+                    gosub_command.add_line_of_gosub()
+                    line_pointer = new_index
+                else:
+                    line_pointer += 1
+                    continue
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.RETURN:
+                if len(lst_of_gosub) == 0:
+                    raise ReturnWithNoGoSubError
+                else:
+                    line_pointer = lst_of_gosub[len(lst_of_gosub) - 1]
+                    lst_of_gosub.pop(len(lst_of_gosub) - 1)
+            elif convert_tokens[line_pointer][0].kind() == GrinTokenKind.END or convert_tokens[line_pointer][0].kind() == GrinTokenKind.DOT:
+                break
+        self.assertEqual(all_values, {"A": 3})
