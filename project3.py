@@ -19,6 +19,7 @@ def main() -> None:
     all_var_values = dict()
     all_label_lines = grin.label_line(convert_commands)
     line_tracker = 0
+    gosub_return_line = []
     if convert_commands is not None:
         try:
             while line_tracker < len(convert_commands):
@@ -62,6 +63,21 @@ def main() -> None:
                     else:
                         line_tracker += 1
                         continue
+                elif convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.GOSUB:
+                    gosub_command = grin.GoSub(convert_commands[line_tracker], convert_commands, line_tracker, gosub_return_line)
+                    if gosub_command.check_condition(all_var_values):
+                        line_num = gosub_command.jump_lines(all_var_values, all_label_lines)
+                        gosub_command.add_line_of_gosub()
+                        line_tracker = line_num
+                    else:
+                        line_tracker += 1
+                        continue
+                elif convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.RETURN:
+                    if len(gosub_return_line) == 0:
+                        raise grin.ReturnWithNoGoSubError
+                    else:
+                        line_tracker = gosub_return_line[len(gosub_return_line) - 1]
+                        gosub_return_line.pop(len(gosub_return_line) - 1)
                 elif convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.END or convert_commands[line_tracker][0].kind() == grin.GrinTokenKind.DOT:
                     break
         except RuntimeError:
